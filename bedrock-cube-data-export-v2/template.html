@@ -10,6 +10,10 @@
          height: 1px;
          background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
       }
+
+      .disabled{
+         color: rgba(0,0,0,0.25);
+      }
       
    </style>
 </head>
@@ -19,7 +23,7 @@
    <div class="modal-header text-white bg-secondary">
       <span>
          <i class="fa fa-cloud-download"></i>
-         <span translate="Export cube data to file"></span>
+         <span>Export {{ngDialogData.cubeName}} data to file</span>
          <i class="fa fa-info-circle" aria-hidden="true" uib-popover="Execute the process Bedrock.Cube.Data.Export" popover-trigger="'mouseenter'"
             popover-class="popover-class-default"></i>
    </div>
@@ -79,7 +83,8 @@
          <!-- IF manual definition turned off, then display additional information -->
          <div ng-if="ngDialogData.manualFilter">
             <input class="form-control" type="text" ng-model="ngDialogData.filter" />
-            <div>Example: Year: 2006 + 2007 & Scenario: Actual + Budget & Organization: Europe
+            <div>Example: Year {{ngDialogData.elementStartDelim}} 2006 {{ngDialogData.elementDelim}} 2007 {{ngDialogData.dimensionDelim}} 
+               Scenario{{ngDialogData.elementStartDelim}} Actual {{ngDialogData.elementDelim}} Budget {{ngDialogData.dimensionDelim}} Organization{{ngDialogData.elementStartDelim}} Europe
             </div>
          </div>
       </div>
@@ -87,14 +92,19 @@
       <hr id="parameterSeparator">
       <div class="row m-3">
          <!-- Export file separator -->
-         <div class="col">
-               <span>TAB</span> 
-               <a href class="click" ng-click="ngDialogData.exportSeparatorCSV = !ngDialogData.exportSeparatorCSV">  
-                  <i class="fa fa-toggle-on" ng-if="ngDialogData.exportSeparatorCSV"></i>
-                  <i class="fa fa-toggle-on fa-rotate-180" ng-if="!ngDialogData.exportSeparatorCSV"></i>
-               </a>
-               <span>CSV</span>
-         </div>
+            <!-- Disabled until bedrock v4 -->
+               <div class="col disabled"
+                  uib-popover="Not yet available" popover-trigger="'mouseenter'" popover-class="popover-class-default" 
+                  popover-placement="auto top-left"> 
+                  <div class="col">
+                     <span>TAB</span> 
+                     <a href class="click" ng-click="ngDialogData.exportSeparatorCSV = !ngDialogData.exportSeparatorCSV">  
+                        <i class="fa fa-toggle-on" ng-if="ngDialogData.exportSeparatorCSV"></i>
+                        <i class="fa fa-toggle-on fa-rotate-180" ng-if="!ngDialogData.exportSeparatorCSV"></i>
+                     </a>
+                     <span>CSV</span>
+                  </div>
+               </div>
          <!-- Checkboxes: Skip rules & Skip consolidations -->
          <div class="col">
             <input type="checkbox" ng-model="ngDialogData.skipRules" />
@@ -104,6 +114,26 @@
             <input type="checkbox" ng-model="ngDialogData.skipCons" />
             <span translate="SKIPCONS"></span>
          </div>
+      </div>
+      <!-- Filter delimiters -->
+      <div class="input-group">
+         <div class="input-group-prepend" style="width:100%">
+            <span class="input-group-text" style="width:100%; border-radius: .25rem .25rem 0 0">Filter Delimiters:</span>
+         </div> 
+      </div>
+      <div class="input-group mb-6">
+         <div class="input-group-prepend">
+            <span class="input-group-text" style="border-radius: 0 0 0 .25rem">Dimension</span>
+         </div> 
+         <input type="text" class="form-control" placeholder="&&" ng-model="ngDialogData.dimensionDelim">
+         <div class="input-group-prepend">
+            <span class="input-group-text">ElementStart</span>
+         </div> 
+         <input type="text" class="form-control" placeholder="::" ng-model="ngDialogData.elementStartDelim">
+         <div class="input-group-prepend">
+            <span class="input-group-text">Element</span>
+         </div> 
+         <input type="text" id="elementDelim" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" placeholder="++" ng-model="ngDialogData.elementDelim" style="border-radius:0 0 .25rem 0">
       </div>
    </div>
    <!-- Footer: Cancel / Run buttons -->

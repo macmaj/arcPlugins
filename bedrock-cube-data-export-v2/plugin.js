@@ -1,7 +1,6 @@
 // Add array to store element names
 // Add array.push to include new elements
 
-
 arc.run(['$rootScope', function ($rootScope) {
 
    $rootScope.plugin("cubewiseBedrockCubeDataExportv2", "Bedrock Export v2", "menu/cube", {
@@ -17,6 +16,7 @@ arc.run(['$rootScope', function ($rootScope) {
 arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog', '$dialogs', '$http', function ($rootScope, $tm1, ngDialog, $dialogs, $http) {
    // The interface you must implement
    this.execute = function (instance, name) {
+
       // Create a callback function for the dialog
       var action = function (options) {
          dialog.close();
@@ -25,9 +25,9 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
          _.each(options.dimensions, function (item) {
             if (item.filter) {
                if(nbDimensionFiltered==1){
-                  options.filter = item.Name +'::'+item.filter;
+                  options.filter = item.Name + options.elementStartDelim + item.filter;
                }else{
-                  options.filter = options.filter+' && '+item.Name +'::'+item.filter;
+                  options.filter = options.filter + options.elementDelim + item.Name + options.elementStartDelim + item.filter;
                }
                nbDimensionFiltered++;
             }
@@ -35,11 +35,12 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
 
          var processName;
          // Define processName based on user choice in html form
-         if(options.exportSeparatorCSV){
+   // Disabled until bedrock v4
+         // if(options.exportSeparatorCSV){
             processName = "Bedrock.Cube.Data.Export";
-         }else{
-            processName = "Bedrock.Cube.Data.Export.Tab";
-         };
+         // }else{
+            // processName = "Bedrock.Cube.Data.Export.Tab";
+         // };
          // Call Bedrock.Cube.Data.Export via the $tm1 service 
          $tm1.processExecute(instance, processName, [
             {
@@ -118,8 +119,8 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
          // Use the data option to pass through data (or functions to the template), the data is then used in
          //  the template with ngDialogData
          // vincent:
-         //initialize the diaglog box inside the REST API request to make sure the dimensions are initialized
-         
+         //initialize the dialog box inside the REST API request to make sure the dimensions are initialized
+
          dialog = ngDialog.open({
             className: "ngdialog-theme-default",
             template: "__/plugins/bedrock-cube-data-export-v2/template.html",
@@ -137,7 +138,7 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
                      if( dimension.filter === undefined){
                         dimension.filter = subset.selected.alias;
                      }else{
-                        dimension.filter +=  "++" + subset.selected.alias;
+                        dimension.filter +=  document.querySelector("#elementDelim").value + subset.selected.alias;
                      }                    
                   };
 
@@ -165,6 +166,7 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
 
             }],
             data: {
+               cubeName: name,
                fileName: name + ".csv",
                filePath: directory,
                filter: "",
