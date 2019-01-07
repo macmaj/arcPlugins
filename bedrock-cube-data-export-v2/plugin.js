@@ -33,14 +33,8 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
             }
          });
 
-         var processName;
-         // Define processName based on user choice in html form
-   // Disabled until bedrock v4
-         // if(options.exportSeparatorCSV){
-            processName = "Bedrock.Cube.Data.Export";
-         // }else{
-            // processName = "Bedrock.Cube.Data.Export.Tab";
-         // };
+         var processName = "Bedrock.Cube.Data.Export";
+
          // Call Bedrock.Cube.Data.Export via the $tm1 service 
          $tm1.processExecute(instance, processName, [
             {
@@ -78,16 +72,6 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
             }
          });
       };
-
-      // #region DEV New pop-up 
-            // this.myDialog = function() {
-            //    ngDialog.open({
-            //    template: '__/plugins/bedrock-cube-data-export-v2/secondPage.html',
-            //    className: 'ngdialog-theme-default',
-            //    scope: this,
-            //    });
-            // };
-            // #endregion ND DEV
 
       var dialog = undefined;
       
@@ -154,15 +138,6 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
                   $subsetDialogs.open(instance, hierarchy.dimension, hierarchy.name, subset, handler);
                   
                 };
-            
-            //  Maciej: My attempt to dynamically color all ++ in element filter
-            //     function chnColor(){
-            //       str=document.getElementsByClassName("dim.filter");
-            //       str=str.replace(/(\+)(\+)/g,"<font color='red'>$1$2</font>");
-            //       document.getElementsByClassName("dim.filter")=str;
-            //   }
-          
-            //    chnColor();
 
             }],
             data: {
