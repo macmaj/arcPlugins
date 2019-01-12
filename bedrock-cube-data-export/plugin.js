@@ -13,7 +13,7 @@ arc.run(['$rootScope', function ($rootScope) {
 
 }]);
 
-arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog', '$dialogs', '$http', function ($rootScope, $tm1, ngDialog, $dialogs, $http) {
+arc.service('cubewiseBedrockCubeDataExport', ['$rootScope', '$tm1', 'ngDialog', '$dialogs', '$http', function ($rootScope, $tm1, ngDialog, $dialogs, $http) {
    // The interface you must implement
    this.execute = function (instance, name) {
 
@@ -107,7 +107,7 @@ arc.service('cubewiseBedrockCubeDataExportv2', ['$rootScope', '$tm1', 'ngDialog'
 
          dialog = ngDialog.open({
             className: "ngdialog-theme-default",
-            template: "__/plugins/bedrock-cube-data-export-v2/template.html",
+            template: "__/plugins/bedrock-cube-data-export/template.html",
             controller: ['$rootScope', '$scope', '$subsetDialogs', function ($rootScope, $scope, $subsetDialogs) {
                //Open Subset Editor
                $scope.editSubset = function (dimension) {
