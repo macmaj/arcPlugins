@@ -3,12 +3,12 @@
 
 arc.run(['$rootScope', function ($rootScope) {
 
-   $rootScope.plugin("cubewiseBedrockCubeDataExportv2", "Bedrock Export v2", "menu/cube", {
+   $rootScope.plugin("cubewiseBedrockCubeDataExport", "Bedrock Export", "menu/cube", {
       icon: "fa-cloud-download",
       description: "This plugin exports cube data using Bedrock.Cube.Data.Export process. You can specify:....",
       author: "Cubewise",
       url: "https://github.com/cubewise-code/arc-plugins",
-      version: "1.0.0"
+      version: "1.0.2"
    });
 
 }]);
